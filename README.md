@@ -54,7 +54,7 @@ import (
 func example() {
 	i := iterator.Items(1, 2, 3, 4)
 	iterator.Range[int](i, func(index int, item int) bool {
-        if item == 4 {
+		if item == 4 {
 			return false // bool return argument simulates break behaviour -- return false to stop iteration
 		}
 		fmt.Println(item)
