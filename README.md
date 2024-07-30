@@ -40,3 +40,26 @@ func example() {
 }
 
 ```
+
+and range function to easily iterate through iterator items:
+```go
+
+package example
+
+import (
+	"fmt"
+	"github.com/gogolibs/iterator"
+)
+
+func example() {
+	i := iterator.Items(1, 2, 3, 4)
+	iterator.Range[int](i, func(index int, item int) bool {
+        if item == 4 {
+			return false // bool return argument simulates break behaviour -- return false to stop iteration
+		}
+		fmt.Println(item)
+		return true
+	}) // prints 1, 2, 3
+}
+
+```

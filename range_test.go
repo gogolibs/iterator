@@ -7,10 +7,14 @@ import (
 )
 
 func TestRange(t *testing.T) {
-	i := iterator.Items(1, 2, 3)
+	i := iterator.Items(1, 2, 3, 4)
 	actual := make([]int, 3)
-	iterator.Range[int](i, func(index int, item int) {
+	iterator.Range[int](i, func(index int, item int) bool {
+		if item == 4 {
+			return false
+		}
 		actual[index] = item
+		return true
 	})
 	expected := []int{1, 2, 3}
 	if !reflect.DeepEqual(expected, actual) {
