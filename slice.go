@@ -1,27 +1,43 @@
 package iterator
 
-func Items[T any](items ...T) *SliceIterator[T] {
-	return Slice(items)
+// FromItems is a synactic sugar for FromSlice function
+// for easier inline Slice iterator instantiation.
+func FromItems[T any](items ...T) *Slice[T] {
+	return FromSlice(items)
 }
 
-func Slice[T any](s []T) *SliceIterator[T] {
-	return &SliceIterator[T]{
+// FromSlice creates a Slice iterator from a slice.
+func FromSlice[T any](s []T) *Slice[T] {
+	return &Slice[T]{
 		slice: s,
 		index: 0,
 	}
 }
 
-type SliceIterator[T any] struct {
+// Slice is an implementation of Iterator for slices.
+type Slice[T any] struct {
 	slice []T
 	index int
 }
 
-func (i *SliceIterator[T]) HasNext() bool {
+func (i *Slice[T]) HasNext() bool {
 	return i.index < len(i.slice)
 }
 
-func (i *SliceIterator[T]) Next() T {
+func (i *Slice[T]) Next() T {
 	item := i.slice[i.index]
 	i.index++
 	return item
+}
+
+// ToSlice simply exhausts the iterator into a slice.
+// The initial size must be specified as Iterator does not
+// have any knowledge of the size of the thing it iterates over.
+func ToSlice[T any](iterator Iterator[T], size int) []T {
+	slice := make([]T, 0, size)
+	ForEach(iterator, func(item T) bool {
+		slice = append(slice, item)
+		return true
+	})
+	return slice
 }

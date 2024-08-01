@@ -7,7 +7,7 @@ import (
 )
 
 func TestSlice(t *testing.T) {
-	i := iterator.Items(1, 2, 3)
+	i := iterator.FromItems(1, 2, 3)
 	if !i.HasNext() {
 		t.Fatal("must have first value")
 	}
@@ -36,7 +36,7 @@ func TestSlice(t *testing.T) {
 
 func TestSliceNextEmpty(t *testing.T) {
 	expected := "runtime error: index out of range [0] with length 0"
-	i := iterator.Items[int]()
+	i := iterator.FromItems[int]()
 	defer func() {
 		r := recover()
 		err, ok := r.(error)
