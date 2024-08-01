@@ -87,3 +87,24 @@ func main() {
 }
 
 ```
+
+## Transforming an iterator
+
+```go
+
+package main
+
+import (
+	"fmt"
+	"github.com/gogolibs/iterator"
+)
+
+func main() {
+	i := iterator.FromItems(1, 2, 3)
+	t := iterator.Transform(i, func(item int) string {
+		return fmt.Sprintf("user%d", item)
+	})
+	fmt.Println(iterator.ToSlice[string](t, 3)) // prints user1, user2, user3
+}
+
+```
