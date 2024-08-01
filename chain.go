@@ -1,6 +1,6 @@
 package iterator
 
-// Chain chains multiple iterators in a single iterator
+// Chain chains multiple iterators into a single iterator
 func Chain[T any](iterators ...Iterator[T]) *Chained[T] {
 	return &Chained[T]{
 		iterators: iterators,
